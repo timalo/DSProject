@@ -2,7 +2,6 @@ import sqlite3
 import datetime
 
 class db_handler_class(object):
-	"""docstring for bpong_db_handler"""
 	def __init__(self, file):
 		self.file = file
 		self.create_connection()
