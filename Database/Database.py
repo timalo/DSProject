@@ -7,6 +7,7 @@ SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 80 # port we want to use
 separator_token = "<SEP>" # we will use this to separate the client name & message
 
+
 # initialize list/set of all connected client's sockets
 client_sockets = set()
 # create a TCP socket

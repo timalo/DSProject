@@ -8,6 +8,7 @@ DB_HOST = "172.17.0.2"
 DB_PORT = 80
 separator_token = "<SEP>" # we will use this to separate the client name & message
 
+
 # initialize list/set of all connected client's sockets
 client_sockets = set()
 # create a TCP socket
