@@ -13,6 +13,14 @@ class db_handler_class(object):
 		except Error as e:
 			print(e)
 		return conn
+
+	def create_table(self, create_table_sql):
+		try:
+			c = self.conn.cursor()
+			c.execute(create_table_sql)
+		except Exception as e:
+			print(e)
+		self.conn.commit()
 	def create_table(self, create_table_sql):
 		try:
 			c = self.conn.cursor()
@@ -28,25 +36,24 @@ class db_handler_class(object):
 			ls.append(row)
 		return ls
 
-	def add_message(self, name, message):
+	def add_message(self, message):
 		date_now = datetime.datetime.now()
 		date_now = date_now.strftime("%Y-%m-%d %H:%M")
 		cur = self.conn.cursor()
-		cur.execute("INSERT INTO chat_logs (name, message, post_date) VALUES ('{}', '{}', '{}')".format(str(name), str(message), date_now))
+		cur.execute("INSERT INTO chat_logs (message, post_date) VALUES ('{}', '{}')".format(str(message), date_now))
 		self.conn.commit()
 
 
 def main():
 	sql_create_chat_logs_table = """CREATE TABLE IF NOT EXISTS chat_logs (
 											id integer PRIMARY KEY AUTOINCREMENT,
-											name text NOT NULL,
 											message text NOT NULL,
 											post_date timestamp NOT NULL
 											);"""
 	file = "test_database.db"
 	database = db_handler_class(file)
 	database.create_table(sql_create_chat_logs_table)
-	database.add_message("Paskakasa", "test2")
+	database.add_message("Paskakasa_test2")
 	database.conn.commit()
 	print(database.retrieve_messages())
 

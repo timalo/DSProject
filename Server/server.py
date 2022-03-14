@@ -4,6 +4,8 @@ from threading import Thread
 # server's IP address
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 80 # port we want to use
+DB_HOST = "172.17.0.2"
+DB_PORT = 80
 separator_token = "<SEP>" # we will use this to separate the client name & message
 
 # initialize list/set of all connected client's sockets
@@ -17,6 +19,12 @@ s.bind((SERVER_HOST, SERVER_PORT))
 # listen for upcoming connections
 s.listen(5)
 print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
+
+db_s = socket.socket()
+print(f"[*] Connecting to {DB_HOST}:{DB_PORT}...")
+# connect to the server
+db_s.connect((DB_HOST, DB_PORT))
+print("[+] Connected.")
 
 def listen_for_client(cs):
     """
@@ -37,9 +45,11 @@ def listen_for_client(cs):
             # token with ": " for nice printing
             msg = msg.replace(separator_token, ": ")
         # iterate over all connected sockets
+        db_s.send(msg.encode())
         for client_socket in client_sockets:
             # and send the message
             client_socket.send(msg.encode())
+
 
 while True:
     # we keep listening for new connections all the time

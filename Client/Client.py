@@ -20,7 +20,7 @@ client_color = random.choice(colors)
 # server's IP address
 # if the server is not on this machine, 
 # put the private (network) IP address (e.g 192.168.1.2)
-SERVER_HOST = "172.17.0.1"
+SERVER_HOST = "172.17.0.3"
 SERVER_PORT = 80 # server's port
 separator_token = "<SEP>" # we will use this to separate the client name & message
 
