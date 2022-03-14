@@ -30,9 +30,8 @@ print(f"[*] Connecting to {SERVER_HOST}:{SERVER_PORT}...")
 # connect to the server
 s.connect((SERVER_HOST, SERVER_PORT))
 print("[+] Connected.")
-# prompt the client for a name
-#name = input("Enter your name: ")
-name = "client1"
+#prompt the client for a name
+name = input("Enter your name: ")
 
 def listen_for_messages():
     while True:
@@ -40,16 +39,11 @@ def listen_for_messages():
         print("\n" + message)
 
 t = Thread(target=listen_for_messages)
-
 t.daemon = True
-
-print(t)
-
 t.start()
 
 while True:
-
-    to_send = "hello from client" #input()
+    to_send = input()
 
     if to_send.lower() == 'q':
         break

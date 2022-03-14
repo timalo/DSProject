@@ -41,7 +41,6 @@ def listen_for_client(cs):
             # and send the message
             client_socket.send(msg.encode())
 
-
 while True:
     # we keep listening for new connections all the time
     client_socket, client_address = s.accept()
