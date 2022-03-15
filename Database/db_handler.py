@@ -10,7 +10,7 @@ class db_handler_class(object):
 		try:
 			self.conn = sqlite3.connect(self.file)
 			return conn
-		except Error as e:
+		except Exception as e:
 			print(e)
 		return conn
 
