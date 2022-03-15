@@ -38,7 +38,7 @@ class db_handler_class(object):
 
 	def add_message(self, message):
 		date_now = datetime.datetime.now()
-		date_now = date_now.strftime("%Y-%m-%d %H:%M")
+		date_now = date_now.strftime("%Y-%m-%d %H:%M:%S")
 		cur = self.conn.cursor()
 		cur.execute("INSERT INTO chat_logs (message, post_date) VALUES ('{}', '{}')".format(str(message), date_now))
 		self.conn.commit()

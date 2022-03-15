@@ -1,6 +1,8 @@
 import socket
+from sqlite3 import Timestamp
 from threading import Thread
 import db_handler
+import re
 
 # server's IP address
 SERVER_HOST = "0.0.0.0"
@@ -26,6 +28,7 @@ sql_create_chat_logs_table = """CREATE TABLE IF NOT EXISTS chat_logs (
                                             post_date timestamp NOT NULL
                                             );"""
 
+ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])') #used to strip out the ANSI escape characters from user msg
 
 def listen_for_client(cs):
     """
@@ -48,7 +51,15 @@ def listen_for_client(cs):
 
             database = db_handler.db_handler_class("actual_database.db")
             database.create_table(sql_create_chat_logs_table)
-            database.add_message(msg)
+            print("Adding message")
+            split_msg = msg.split("]", 1)
+            #split_msg[0] contains the timestamp from the msg with the square brackets stripped off.
+            #split_msg[1] has the user
+            msg_time = split_msg[0].lstrip(split_msg[0][0]) #not used but might be useful at some point
+            msg_payload = split_msg[1].strip()
+            msg_string = ansi_escape.sub('', msg_payload)
+            print(msg_string)
+            database.add_message(msg_string)
             for message in database.retrieve_messages():
                 print(message)
         # iterate over all connected sockets
